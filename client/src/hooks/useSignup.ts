@@ -29,14 +29,13 @@ const useSignup = () => {
                 withCredentials: true,
             });
 
-            if (response.status === 201) {
-                return;
+            return response.data;
+        } catch (err: any) {
+            if (err.response && err.response.data && err.response.data.message) {
+                setError(err.response.data.message);
             } else {
-                setError("Registration failed.");
-                throw new Error("Registraion failed");
+                setError("An unknown error during registration");
             }
-        } catch (err) {
-            setError("An error occurred during registration.");
             console.error("Error during registration:", err);
             throw err;
         } finally {

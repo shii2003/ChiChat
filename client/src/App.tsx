@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { RecoilRoot } from 'recoil';
 import { lazy, Suspense } from "react";
 import ProtectRoute from "./component/auth/ProtectRoute";
 import { LayoutLoader } from "./component/layout/Loadres";
@@ -18,33 +19,35 @@ function App() {
 
 
   return (
-    <Router>
-      <Suspense fallback={<LayoutLoader />}>
-        <Routes>
-          <Route element={<ProtectRoute user={user} />}>
-            <Route path='/' element={<Home />} />
-            <Route path='/chat/:chatId' element={<Chat />} />
-            <Route path='/groups' element={<Groups />} />
-          </Route>
-          <Route path='/login' element={
+    <RecoilRoot>
+      <Router>
+        <Suspense fallback={<LayoutLoader />}>
+          <Routes>
+            <Route element={<ProtectRoute user={user} />}>
+              <Route path='/' element={<Home />} />
+              <Route path='/chat/:chatId' element={<Chat />} />
+              <Route path='/groups' element={<Groups />} />
+            </Route>
+            <Route path='/login' element={
 
-            <ProtectRoute user={!user} redirect="/">
-              <Title title="ChitChat" description="ChitChat" />
-              <Login />
-            </ProtectRoute>
-          } />
-          <Route path='/signup' element={
-            <ProtectRoute user={!user} redirect="/">
-              <Title title="ChitChat" description="ChitChat" />
-              <Register />
-            </ProtectRoute>
-          }
-          />
+              <ProtectRoute user={!user} redirect="/">
+                <Title title="ChitChat" description="ChitChat" />
+                <Login />
+              </ProtectRoute>
+            } />
+            <Route path='/signup' element={
+              <ProtectRoute user={!user} redirect="/">
+                <Title title="ChitChat" description="ChitChat" />
+                <Register />
+              </ProtectRoute>
+            }
+            />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-    </Router>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </Router>
+    </RecoilRoot>
   )
 }
 

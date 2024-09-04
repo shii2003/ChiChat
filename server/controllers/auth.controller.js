@@ -18,7 +18,7 @@ export const signup = async (req, res) => {
 
         const emailExists = await User.findOne({ email });
         if (emailExists) {
-            return res.status(400).json({ error: "email is already registered" })
+            return res.status(400).json({ message: "email is already registered" })
         }
         //HASH PASSWORD HERE
         const salt = await bcrypt.genSalt(10);
@@ -48,7 +48,7 @@ export const signup = async (req, res) => {
 
             });
         } else {
-            res.status(400).json({ error: "Invalid user data" });
+            res.status(400).json({ message: "Invalid user data" });
         }
 
     } catch (error) {

@@ -82,8 +82,6 @@ const Register: React.FC = () => {
             let profilePictureUrl: string | undefined = undefined;
 
             if (imageBase64) {
-                console.log("Cloud Name:", cloudName);
-                console.log("Upload Preset:", uploadPreset);
                 const formData = new FormData();
                 formData.append("file", imageBase64);
                 formData.append("upload_preset", uploadPreset)
