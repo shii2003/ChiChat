@@ -27,6 +27,7 @@ const Register: React.FC = () => {
     });
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [imageBase64, setImageBase64] = useState<string>("");
+
     const navigate = useNavigate();
 
     const { signup, loading, error } = useSignup();
@@ -91,9 +92,8 @@ const Register: React.FC = () => {
             }
             const formDataToSend = { ...data, profilePicture: profilePictureUrl };
 
-            console.log("Form Data:", formDataToSend);
-
             await signup(formDataToSend);
+
             navigate("/");
         } catch (error) {
             console.log("error during signup: ", error);

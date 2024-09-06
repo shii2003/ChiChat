@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { RegisterFormData } from '../utils/types/types';
 import axios from 'axios';
+import { useAuthContext } from '../context/AuthContext';
 
 
 
 const useSignup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
+    const { authUser, setAuthUser } = useAuthContext()
 
     const signup = async (data: RegisterFormData) => {
         setLoading(true);
@@ -29,7 +30,10 @@ const useSignup = () => {
                 withCredentials: true,
             });
 
-            return response.data;
+            const userData = response.data;
+            console.log("localStorageDAta:", userData)
+            localStorage.setItem("chat-user", JSON.stringify(userData))
+            setAuthUser(userData);
         } catch (err: any) {
             if (err.response && err.response.data && err.response.data.message) {
                 setError(err.response.data.message);

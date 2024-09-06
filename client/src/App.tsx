@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 import ProtectRoute from "./component/auth/ProtectRoute";
 import { LayoutLoader } from "./component/layout/Loadres";
 import Title from "./component/shared/Title";
+import { useAuthContext } from "./context/AuthContext";
 
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -13,30 +14,32 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Register = lazy(() => import("./pages/Register"))
 
 //below line of code is for testing purpose only
-const user = false;
+// 
 
 function App() {
 
+  const { authUser } = useAuthContext();
 
   return (
     <RecoilRoot>
       <Router>
         <Suspense fallback={<LayoutLoader />}>
           <Routes>
-            <Route element={<ProtectRoute user={user} />}>
+            <Route element={<ProtectRoute user={authUser} />}>
               <Route path='/' element={<Home />} />
               <Route path='/chat/:chatId' element={<Chat />} />
               <Route path='/groups' element={<Groups />} />
             </Route>
-            <Route path='/login' element={
 
-              <ProtectRoute user={!user} redirect="/">
+            <Route path='/login' element={
+              <ProtectRoute user={authUser} isAuthRoute={true} redirect="/">
                 <Title title="ChitChat" description="ChitChat" />
                 <Login />
               </ProtectRoute>
             } />
+
             <Route path='/signup' element={
-              <ProtectRoute user={!user} redirect="/">
+              <ProtectRoute user={authUser} isAuthRoute={true} redirect="/">
                 <Title title="ChitChat" description="ChitChat" />
                 <Register />
               </ProtectRoute>
