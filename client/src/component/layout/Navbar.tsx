@@ -1,14 +1,14 @@
 import React, { Suspense, useState } from 'react';
-import { FiLogOut } from "react-icons/fi";
 import { RxAvatar } from 'react-icons/rx';
-import { IoMenuSharp } from "react-icons/io5";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import ImageLoader from '../../utils/ImageLoader';
 import SearchBar from '../ui/SearchBar';
 import Tooltip from '../ui/Tooltip';
 import MobileNavbar from './MobileNavbar';
-
+import LogoutButton from '../NavbarComponents/LogoutButton';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar: React.FC = () => {
 
@@ -46,9 +46,10 @@ const Navbar: React.FC = () => {
 
                     {/* LogOut Button */}
                     <div className='relative group'>
-                        <button className=" text-white px-4 py-2 rounded">
+                        {/* <button className=" text-white px-4 py-2 rounded">
                             <FiLogOut className="mr-2  text-slate-200" size={25} />
-                        </button>
+                        </button> */}
+                        <LogoutButton />
                         <Tooltip text='logout' />
                     </div>
 
@@ -62,6 +63,15 @@ const Navbar: React.FC = () => {
                 <SearchBar />
                 <div className='my-2 h-px bg-zinc-600' />
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                closeOnClick={true}
+                pauseOnHover={true}
+                draggable={true}
+                theme="dark"
+            />
         </div>
     );
 }
