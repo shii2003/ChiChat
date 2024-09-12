@@ -44,6 +44,7 @@ export const signup = async (req, res) => {
                 _id: newUser._id,
                 email: newUser.email,
                 name: newUser.name,
+                bio: newUser.bio,
                 profilePicture: newUser.profilePicture,
 
             });
@@ -79,7 +80,7 @@ export const login = async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(password, user?.password || "");//if password is null compare it with an empty string
         if (!isPasswordValid) {
-            return res.status(401).json({ error: "wrong password" })
+            return res.status(400).json({ error: "password is incorrect" })
         }
 
         generateTokenAndSetCookie(user._id, res)
@@ -88,12 +89,13 @@ export const login = async (req, res) => {
 
         return res
             .status(200)
-            .json(
-                {
-                    user: loggedInUser,
-                    message: "User logged in successfully"
-                }
-            )
+            .json({
+                _id: loggedInUser._id,
+                email: loggedInUser.email,
+                name: loggedInUser.name,
+                bio: loggedInUser.bio,
+                profilePicture: loggedInUser.profilePicture,
+            })
     } catch (error) {
 
         console.log("Error in login controller", error.stack || error.message)
